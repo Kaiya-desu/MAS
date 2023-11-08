@@ -1,0 +1,215 @@
+-- Created by Vertabelo (http://vertabelo.com)
+-- Last modification date: 2022-05-25 22:11:03.331
+
+-- tables
+-- Table: Address
+CREATE TABLE Address (
+                         ID_Address integer NOT NULL CONSTRAINT Address_pk PRIMARY KEY,
+                         Person_ID_Person integer NOT NULL,
+                         Country varchar(30) NOT NULL,
+                         City varchar(30) NOT NULL,
+                         Street varchar(100) NOT NULL,
+                         HouseNumber varchar(30) NOT NULL,
+                         PostCode varchar(10) NOT NULL,
+                         CONSTRAINT Address_Person FOREIGN KEY (Person_ID_Person)
+                             REFERENCES Person (ID_Person)
+);
+
+-- Table: Client
+CREATE TABLE Client (
+                        Person_ID_Person integer NOT NULL,
+                        Login varchar(30) NOT NULL CONSTRAINT Client_pk PRIMARY KEY,
+                        Password varchar(30) NOT NULL,
+                        CONSTRAINT Client_Person FOREIGN KEY (Person_ID_Person)
+                            REFERENCES Person (ID_Person)
+);
+
+-- Table: Client_Order
+CREATE TABLE Client_Order (
+                              Client_Order integer NOT NULL CONSTRAINT Client_Order_pk PRIMARY KEY,
+                              Client_Login varchar(30) NOT NULL,
+                              Order_ID_Order integer NOT NULL,
+                              Employee_Warehouse_ID_Employee_Warehouse integer,
+                              CONSTRAINT Table_22_Client FOREIGN KEY (Client_Login)
+                                  REFERENCES Client (Login),
+                              CONSTRAINT Table_22_Order FOREIGN KEY (Order_ID_Order)
+                                  REFERENCES New_Order (ID_Order),
+                              CONSTRAINT Client_Order_Employee_Warehouse FOREIGN KEY (Employee_Warehouse_ID_Employee_Warehouse)
+                                  REFERENCES Employee_Warehouse (ID_Employee_Warehouse)
+);
+
+-- Table: Employee
+CREATE TABLE Employee (
+                          Person_ID_Person integer NOT NULL,
+                          ID_Employee integer NOT NULL CONSTRAINT Employee_pk PRIMARY KEY,
+                          Pesel integer NOT NULL,
+                          Sex varchar(10) NOT NULL,
+                          MaidenName varchar(30) NOT NULL,
+                          EmploymentDate varchar(10) NOT NULL,
+                          HourlyWage float NOT NULL,
+                          PartTime float NOT NULL,
+                          CONSTRAINT Employee_Person FOREIGN KEY (Person_ID_Person)
+                              REFERENCES Person (ID_Person)
+);
+
+-- Table: Employee_Support
+CREATE TABLE Employee_Support (
+                                  Employee_ID_Employee integer NOT NULL,
+                                  ID_Employee_Support integer NOT NULL CONSTRAINT Employee_Support_pk PRIMARY KEY,
+                                  CONSTRAINT Employee_Support_Employee FOREIGN KEY (Employee_ID_Employee)
+                                      REFERENCES Employee (ID_Employee)
+);
+
+-- Table: Employee_Support_Languages
+CREATE TABLE Employee_Support_Languages (
+                                            ID_ESL integer NOT NULL CONSTRAINT Employee_Support_Languages_pk PRIMARY KEY,
+                                            Employee_Support_ID_Employee_Support integer NOT NULL,
+                                            Language varchar(30) NOT NULL,
+                                            CONSTRAINT Employee_Languages_Employee_Support FOREIGN KEY (Employee_Support_ID_Employee_Support)
+                                                REFERENCES Employee_Support (ID_Employee_Support)
+);
+
+-- Table: Employee_Warehouse
+CREATE TABLE Employee_Warehouse (
+                                    Employee_ID_Employee integer NOT NULL,
+                                    ID_Employee_Warehouse integer NOT NULL CONSTRAINT Employee_Warehouse_pk PRIMARY KEY,
+                                    Forklift_Licence boolean NOT NULL,
+                                    CONSTRAINT Employee_Psychical_Employee FOREIGN KEY (Employee_ID_Employee)
+                                        REFERENCES Employee (ID_Employee)
+);
+
+-- Table: Game
+CREATE TABLE Game (
+                      ID_Game integer NOT NULL CONSTRAINT Game_pk PRIMARY KEY,
+                      Name varchar(100) NOT NULL,
+                      Price float NOT NULL,
+                      Studio varchar(100) NOT NULL,
+                      ReleaseDate varchar(10) NOT NULL,
+                      Description varchar(300),
+                      Trailer varchar(100),
+                      Availability integer NOT NULL
+);
+
+-- Table: Game_ExtraInfos
+CREATE TABLE Game_ExtraInfos (
+                                 ID_GE integer NOT NULL CONSTRAINT Game_ExtraInfos_pk PRIMARY KEY,
+                                 Game_ID_Game integer NOT NULL,
+                                 ExtraInfo integer NOT NULL,
+                                 CONSTRAINT Game_ExtraInfo_Game FOREIGN KEY (Game_ID_Game)
+                                     REFERENCES Game (ID_Game)
+);
+
+-- Table: Game_Genre
+CREATE TABLE Game_Genre (
+                            ID_GG integer NOT NULL CONSTRAINT Game_Genre_pk PRIMARY KEY,
+                            Game_ID_Game integer NOT NULL,
+                            Genre_ID_Genre integer NOT NULL,
+                            CONSTRAINT Game_Genre_Game FOREIGN KEY (Game_ID_Game)
+                                REFERENCES Game (ID_Game),
+                            CONSTRAINT Game_Genre_Genre FOREIGN KEY (Genre_ID_Genre)
+                                REFERENCES Genre (ID_Genre)
+);
+
+-- Table: Game_Languages
+CREATE TABLE Game_Languages (
+                                ID_GL integer NOT NULL CONSTRAINT Game_Languages_pk PRIMARY KEY,
+                                Game_ID_Game integer NOT NULL,
+                                Language integer NOT NULL,
+                                CONSTRAINT Game_Languages_Game FOREIGN KEY (Game_ID_Game)
+                                    REFERENCES Game (ID_Game)
+);
+
+-- Table: Game_Platform
+CREATE TABLE Game_Platform (
+                               ID_Platform integer NOT NULL CONSTRAINT Game_Platform_pk PRIMARY KEY,
+                               Game_ID_Game integer NOT NULL,
+                               Platform_ID_Platform integer NOT NULL,
+                               CONSTRAINT Game_Platform_Game FOREIGN KEY (Game_ID_Game)
+                                   REFERENCES Game (ID_Game),
+                               CONSTRAINT Game_Platform_Platform FOREIGN KEY (Platform_ID_Platform)
+                                   REFERENCES Platform (ID_Platform)
+);
+
+-- Table: Genre
+CREATE TABLE Genre (
+                       ID_Genre integer NOT NULL CONSTRAINT Genre_pk PRIMARY KEY,
+                       Name varchar(50) NOT NULL,
+                       Description varchar(100) NOT NULL
+);
+
+-- Table: New_Order
+CREATE TABLE New_Order (
+                           ID_Order integer NOT NULL CONSTRAINT New_Order_pk PRIMARY KEY,
+                           Date varchar(10) NOT NULL,
+                           ShippingDate varchar(10) NOT NULL,
+                           FullPrice double,
+                           Shipping_Type varchar(50) NOT NULL,
+                           Status varchar(50) NOT NULL
+);
+
+-- Table: Payment
+CREATE TABLE Payment (
+                         ID_Payment integer NOT NULL CONSTRAINT Payment_pk PRIMARY KEY,
+                         Type_Of_Payment varchar(50) NOT NULL,
+                         Date varchar(10) NOT NULL,
+                         Status varchar(50) NOT NULL,
+                         Order_ID_Order integer NOT NULL,
+                         CONSTRAINT Payment_Order FOREIGN KEY (Order_ID_Order)
+                             REFERENCES New_Order (ID_Order)
+);
+
+-- Table: Person
+CREATE TABLE Person (
+                        ID_Person integer NOT NULL CONSTRAINT Person_pk PRIMARY KEY,
+                        Name varchar(30) NOT NULL,
+                        Surname varchar(30) NOT NULL,
+                        Birthdate varchar(10) NOT NULL,
+                        PhoneNumber integer
+);
+
+-- Table: Platform
+CREATE TABLE Platform (
+                          ID_Platform integer NOT NULL CONSTRAINT Platform_pk PRIMARY KEY,
+                          Name varchar(50) NOT NULL,
+                          Brand varchar(50) NOT NULL,
+                          Description varchar(300) NOT NULL
+);
+
+-- Table: Question
+CREATE TABLE Question (
+                          ID_Question integer NOT NULL CONSTRAINT Question_pk PRIMARY KEY,
+                          Title varchar(100) NOT NULL,
+                          Language varchar(100) NOT NULL,
+                          Date varchar(10) NOT NULL,
+                          Description varchar(300) NOT NULL,
+                          Status varchar(50) NOT NULL
+);
+
+-- Table: Question_Employe_Support
+CREATE TABLE Question_Employe_Support (
+                                          ID_QES integer NOT NULL CONSTRAINT Question_Employe_Support_pk PRIMARY KEY,
+                                          Question_ID_Question integer NOT NULL,
+                                          Client_Login varchar(30) NOT NULL,
+                                          Employee_Support_ID_Employee_Support integer,
+                                          CONSTRAINT Question_Employe_Support_Question FOREIGN KEY (Question_ID_Question)
+                                              REFERENCES Question (ID_Question),
+                                          CONSTRAINT Question_Employe_Support_Client FOREIGN KEY (Client_Login)
+                                              REFERENCES Client (Login),
+                                          CONSTRAINT Question_Employe_Support_Employee_Support FOREIGN KEY (Employee_Support_ID_Employee_Support)
+                                              REFERENCES Employee_Support (ID_Employee_Support)
+);
+
+-- Table: Score
+CREATE TABLE Score (
+                       ID_Score integer NOT NULL CONSTRAINT Score_pk PRIMARY KEY,
+                       Game_ID_Game integer NOT NULL,
+                       Client_Login varchar(30) NOT NULL,
+                       Score integer NOT NULL,
+                       Comment varchar(50),
+                       CONSTRAINT Score_Client FOREIGN KEY (Client_Login)
+                           REFERENCES Client (Login),
+                       CONSTRAINT Score_Game FOREIGN KEY (Game_ID_Game)
+                           REFERENCES Game (ID_Game)
+);
+
+-- End of file.

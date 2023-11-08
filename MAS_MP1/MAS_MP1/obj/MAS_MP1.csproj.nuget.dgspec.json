@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/karolinastruzek/RiderProjects/MAS_MP1/MAS_MP1/MAS_MP1.csproj": {}
+  },
+  "projects": {
+    "/Users/karolinastruzek/RiderProjects/MAS_MP1/MAS_MP1/MAS_MP1.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/karolinastruzek/RiderProjects/MAS_MP1/MAS_MP1/MAS_MP1.csproj",
+        "projectName": "MAS_MP1",
+        "projectPath": "/Users/karolinastruzek/RiderProjects/MAS_MP1/MAS_MP1/MAS_MP1.csproj",
+        "packagesPath": "/Users/karolinastruzek/.nuget/packages/",
+        "outputPath": "/Users/karolinastruzek/RiderProjects/MAS_MP1/MAS_MP1/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/karolinastruzek/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[1.0.115.5, )"
+            },
+            "System.Data.SQLite.Core": {
+              "target": "Package",
+              "version": "[1.0.115.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/karolinastruzek/.dotnet/sdk/6.0.201/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
